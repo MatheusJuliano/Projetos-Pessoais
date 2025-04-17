@@ -1,0 +1,340 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    
+}
+@font-face {
+    font-family: SLAbo;
+    src: url(Fontes/Slabo_27px/Slabo27px-Regular.ttf) format(truetype);
+}
+
+
+
+   
+
+
+body{
+    padding-top: 90px;
+    background-color: rgba(136, 133, 133, 0.432);
+}
+
+p{
+    margin-bottom: 10px;
+    
+}
+
+
+
+
+body,article{
+       
+        font-family: SLAbo;
+        font-size: normal;
+        margin: auto;
+        
+}
+
+header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: top 0.3s ease-in-out;
+    z-index: 1000;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 2px;
+    height: 70px;
+    
+    
+}
+
+.hidden{
+    top: -60px;
+}
+
+header a {
+    border: none;
+    color: white; 
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out; 
+    display: inline-block;
+}
+
+header a:hover {
+transform: scale(1.2);
+
+}
+
+nav{
+    margin-left: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 35px;
+
+    
+    
+}
+nav ul li{
+    display: inline-block;
+}
+ ul li{
+display: inline-block;
+color: white;
+text-decoration: none;
+font-size: bolder;
+transition: transform 0.3s ease-in-out,; 
+text-shadow: 0.3s ease-in-out;
+}
+nav ul li a:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1.0), 
+    0 0 20px rgba(255, 255, 255, 0.6), 
+    0 0 30px rgba(255, 255, 255, 0.4); ;
+
+    
+    
+
+}
+ .social-icons{
+    list-style: none;
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-end;
+    transform: translateY(-175px);
+    margin-right: 25px;
+    
+    
+    
+ }
+
+.criador{
+    height: 3px;
+    background-color: black;
+}
+
+
+.meu-icone {
+    font-size: 30px;  
+    color: black;  
+    cursor: pointer;  
+    transition: color 0.3s, transform 0.3s; 
+    margin: 5px;
+    
+}
+
+.meu-icone:hover {
+    color: rgb(6, 146, 88);  
+    transform: scale(1.2);  
+    
+}
+
+.Linkspecial{
+    color: black;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+
+}
+
+.Linkspecial:hover{
+    color:brown;
+}
+
+.loja{
+    color: yellow;
+}
+.dark{
+    height: 13px;
+    width: auto;
+    margin-left: 70px;
+}
+
+@font-face {
+    font-family: 'MinhaFonte';
+    src: url('Fontes/deutsch_gothic/Deutsch.woff') format('woff'),
+         url('Fontes/deutsch_gothic/Deutsch.ttf') format('truetype'),
+         url('Fontes/deutsch_gothic/Deutsch.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'MinhaFonte2';
+    src: url('Fontes/the_centurion/The Centurion.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'MinhaFonte3';
+    src: url('Fontes/cardinal/Cardinal-Alternate.ttf') format('truetype');
+}
+#meuTitulo {
+    text-align: center;
+    font-family: 'MinhaFonte3', 'MinhaFonte2', sans-serif; 
+    font-weight: bolder; 
+    font-size: 40px; 
+}
+
+#especial{
+    text-align: center;
+    position: relative;
+    font-size: 18px;
+}
+
+#especial::before, #especial::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 40%; 
+    height: 2px; 
+    background-color: black;
+}
+
+#especial::before {
+    left: 0;
+}
+
+#especial::after {
+    right: 0;
+}
+
+#para{
+text-align: center;
+font-family: 'Georgia', serif;
+text-transform: uppercase;
+font-size: 15px;}
+
+#Titulopascoa{
+    text-align: center;  
+}
+
+#SubTituloPascoa{
+    text-align: center;
+}
+
+img{
+    max-width: 100%;
+    height: auto;
+    margin: 10px;
+    display: flex;
+    display: block;
+    object-fit: contain;
+    align-items: center;
+    max-width: 1000px;
+    height: 480px;
+    width:910px;
+}
+
+#coelho{
+    max-width: 100%;
+    width: 910px;
+    height: 580px;
+    image-rendering: crisp-edges;
+}
+
+.ano-magico{
+    width: 909px;
+}
+
+.container {
+    
+    max-width: 1000px; 
+    margin: 0 auto; 
+    padding: 20px; 
+}
+
+
+.footer-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    background-color:black;
+    color: white;
+    padding: 20px;
+}
+
+footer{
+    width: 100%; 
+   display: flex;
+   justify-content: space-around;
+   align-items: start;
+   background-color: black;
+   color: white;
+   padding: 20px;
+
+}
+
+footer ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+footer ul li:first-child{
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    
+}
+
+footer li{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    color: rgb(151, 144, 144);
+    margin-bottom: 5px;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out; 
+
+}
+
+footer li:hover{
+    color: rgb(228, 50, 37);  
+    transform: scale(1.2);  
+
+}
+
+.footer-container img{
+    width: 90px;
+    height: auto;
+}
+
+footer li img{
+    width: 100px;
+    height: auto;
+}
+
+#fim{
+    
+    font-size:12px;
+    text-align: center;
+    line-height: 1.3;
+    background-color: black;
+    color: rgb(110, 106, 106);
+    padding: 20px;
+    margin-top: -60px;
+    
+}
+
+
+#linha-footer{
+    display: block;
+    border: none;
+    height: 1.4px;
+    background-color: rgb(122, 117, 117);
+    width: 100%;
+    margin-top: -25px;
+    margin-bottom: auto;
+    
+    
+   
+}
+
+
+
+
+
+
