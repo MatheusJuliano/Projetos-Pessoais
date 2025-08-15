@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+body{
+    background-color: black;
+    align-items: center;
+    text-align: center;
+    color: white;
+     background: url('http://thecodeplayer.com/u/m/b1.png') no-repeat center center fixed;
+    background-size: cover;
+    min-width: 200px;
+    min-height: 200px;
+    color: #fff;
+}
+.cabecalho {
+    position:fixed ;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 100px;
+    background-color: black;
+     border-bottom:  1px solid #ccc;
+}
+.menu{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    padding-top: -90px;
+    color: white;
+    list-style: none;
+    margin-left: -85px;
+    
+}
+.menu ul{
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  
+}
+.cabecalho-logo{
+    height: 95px;
+    margin-left: 20px;   
+}
+a{
+    color: white;
+    font-size: 16px;   
+}
+a:hover{
+    color: rgb(190, 188, 21);
+}
+.principal{
+    padding-top: 120px;
+    border-top: 1px solid gray;
+    position: relative;
+}
+h1,h2,h3{
+    text-align: center;
+    padding-right: 15%;
+    padding-left: 15%;
+    font-size: 150%;
+}
+p{
+    text-align: center;
+    text-indent: -70px;
+    margin-left: 20px;
+    line-height: 1.6;
+    padding-right: 15%;
+    padding-left: 15%;
+    font-size: 150%;
+}
+.parallax{
+    background-image: url('https://c3.staticflickr.com/1/384/31726910090_a63de4bde9_k.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 60px 20px;
+}
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  
+}
+.card {
+    background: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    height: 300px;
+    margin: 1rem;
+    position: relative;
+    width: 95%;
+    max-width: 300px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.card:hover{
+  transform: scale(1.05);
+}
+.placeholder {
+    color: grey;
+    padding-top: 30%;
+}
+.card-1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+.card-1:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.social-parallax{
+    min-height: 200px;
+    padding: 20px;
+    background-image: url('https://c3.staticflickr.com/1/540/31726906410_ed4a5a550a_k.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.redes-sociais {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.icon {
+  font-size: 30px;
+  color: gray;
+  transition: color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+}
+.icon:hover {
+  transform: scale(1.2);
+}
+
+.facebook:hover {
+  color: #3b5998;
+}
+
+.instagram:hover {
+  color: #e1306c;
+}
+.github:hover {
+      color: #333;
+    }
+
+    .linkedin:hover {
+      color: #0077b5;
+    }
+
+footer{
+    text-align: center;
+    font-style: italic;
+    min-height: 30px;
+    margin: auto;
+    padding-top: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    width: 100%;
+    max-width: 90%;
+  }
+}
