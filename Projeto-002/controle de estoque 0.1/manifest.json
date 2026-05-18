@@ -1,16 +1,42 @@
 {
   "manifest_version": 3,
-  "version": "1.0",
   "name": "Controle de Estoque de Baterias",
   "short_name": "Baterias",
-  "description": "Sistema de controle de estoque e vendas de baterias",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#eef1f4",
-  "theme_color": "#2a7be4",
-  "orientation": "portrait-primary",
+  "version": "1.0.0",
+  "description": "Sistema offline de controle de estoque e vendas de baterias — por Matheus Juliano",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "baterias-estoque@matheus-juliano",
+      "strict_min_version": "109.0"
+    }
+  },
+
+  "action": {
+    "default_title": "Controle de Estoque de Baterias",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "32":  "icons/icon32.png",
+      "48":  "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
   "icons": {
-    "192": "android-chrome-192x192.png",
-    "512": "android-chrome-512x512.png"
+    "16":  "icons/icon16.png",
+    "32":  "icons/icon32.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "permissions": ["tabs"],
+
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';"
   }
 }
