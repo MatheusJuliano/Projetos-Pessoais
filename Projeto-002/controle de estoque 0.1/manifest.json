@@ -10,7 +10,7 @@
   "theme_color": "#2a7be4",
   "orientation": "portrait-primary",
   "icons": {
-    "192": "icon-192.png",
-    "512": "icon-512.png"
+    "192": "android-chrome-192x192.png",
+    "512": "android-chrome-512x512.png"
   }
 }
