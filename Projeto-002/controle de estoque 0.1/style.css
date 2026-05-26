@@ -273,3 +273,48 @@ body.noturno .footer strong {
 body.noturno .footer span {
   color: #4b5a72;
 }
+.btn-relatorio {
+  width: 100%;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.status-ok {
+  background: #d4edda;
+  color: #155724;
+  font-weight: bold;
+}
+
+.status-alerta {
+  background: #fff3cd;
+  color: #856404;
+  font-weight: bold;
+}
+
+.status-critico {
+  background: #f8d7da;
+  color: #721c24;
+  font-weight: bold;
+}
+
+body.noturno .status-ok {
+  background: #1f3a28;
+  color: #7dffaf;
+}
+
+body.noturno .status-alerta {
+  background: #4a3b12;
+  color: #ffd86b;
+}
+
+body.noturno .status-critico {
+  background: #4a1f24;
+  color: #ff8a95;
+}
+.btn-relatorio {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 8px;
+}

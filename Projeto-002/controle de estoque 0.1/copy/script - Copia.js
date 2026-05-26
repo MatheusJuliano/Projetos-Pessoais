@@ -243,4 +243,3 @@ function exportarExcel() {
   link.download = "relatorio_baterias.csv";
   link.click();
 }
-
