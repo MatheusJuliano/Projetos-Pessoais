@@ -17,7 +17,6 @@
   <body>
     <div
       id="toggleNoturno"
-      onclick="toggleNoturno()"
       title="Alternar modo noturno"
     >
       <div id="toggleTrack">
@@ -72,21 +71,30 @@
       </div>
 
       <div class="card">
-        <h3>Estoque</h3>
-        <table class="tabela-scroll">
-          <thead>
-            <tr>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>Qtd</th>
-              <th>Obs</th>
-            </tr>
-          </thead>
-          <tbody id="tabelaEstoque"></tbody>
-        </table>
-        <h3>Total: <span id="total">0</span></h3>
-      </div>
+  <h3>Estoque</h3>
+  <div class="tabela-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Qtd</th>
+          <th>Obs</th>
+          
+        </tr>
+      </thead>
 
+      <tbody id="tabelaEstoque"></tbody>
+    </table>
+  </div>
+  <button onclick="EstoqueReal()" class="btn-relatorio">
+    Gerar Relatório de Estoque
+  </button>
+
+  <h3>Total de itens: <span id="total">0</span></h3>
+
+  
+</div>
       <div class="card">
         <h3>Movimentações</h3>
         <table class="tabela-scroll">
@@ -141,26 +149,9 @@
       >
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="libs/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
     <script src="relatorio.js"></script>
-
-    <script>
-      function toggleNoturno() {
-        var ativo = document.body.classList.toggle("noturno");
-        document.getElementById("toggleIcon").textContent = ativo ? "☀️" : "🌙";
-        localStorage.setItem("modoNoturno", ativo ? "1" : "0");
-      }
-
-      if (localStorage.getItem("modoNoturno") === "1") {
-        document.body.classList.add("noturno");
-        document.getElementById("toggleIcon").textContent = "☀️";
-      }
-
-      // Registra o Service Worker (necessário para funcionar como PWA)
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./service-worker.js");
-      }
-    </script>
+    <script src="init.js"></script>
   </body>
 </html>

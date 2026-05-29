@@ -312,9 +312,11 @@ body.noturno .status-critico {
   color: #ff8a95;
 }
 .btn-relatorio {
-  width: 100%;
+  width: 90%;
   margin-bottom: 12px;
   padding: 10px;
   font-weight: bold;
-  border-radius: 8px;
+  border-radius:6px;
+  margin-top: 12px;
+  justify-content: center;
 }
