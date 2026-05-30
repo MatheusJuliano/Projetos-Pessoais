@@ -190,12 +190,19 @@ function EstoqueReal() {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8.5);
   doc.text(
-    "Operador: " + operador + "   |   Data: " + dataHoje + "   |   Gerado em: " + geradoEm,
-    pL, 20
+    "Operador: " +
+      operador +
+      "   |   Data: " +
+      dataHoje +
+      "   |   Gerado em: " +
+      geradoEm,
+    pL,
+    20,
   );
   doc.text(
     "Matheus Juliano — Sistema de Controle de Estoque de Baterias · Versão 1.0",
-    pL, 25
+    pL,
+    25,
   );
 
   let y = 36;
@@ -203,15 +210,19 @@ function EstoqueReal() {
 
   // ── Resumo ───────────────────────────────────────────────────────────────────
   const totalUnidades = estoque.reduce((s, b) => s + b.qtd, 0);
-  const totalModelos  = estoque.length;
-  const semEstoque    = estoque.filter(b => b.qtd === 0).length;
-  const estoqueBaixo  = estoque.filter(b => b.qtd > 0 && b.qtd <= 5).length;
+  const totalModelos = estoque.length;
+  const semEstoque = estoque.filter((b) => b.qtd === 0).length;
+  const estoqueBaixo = estoque.filter((b) => b.qtd > 0 && b.qtd <= 5).length;
 
   const boxes = [
-    { label: "Modelos cadastrados", valor: totalModelos,  cor: [232, 240, 254] },
-    { label: "Unidades em estoque", valor: totalUnidades, cor: [230, 244, 234] },
-    { label: "Estoque baixo", valor: estoqueBaixo,  cor: [253, 244, 225] },
-    { label: "Sem estoque",        valor: semEstoque,     cor: [253, 232, 232] },
+    { label: "Modelos cadastrados", valor: totalModelos, cor: [232, 240, 254] },
+    {
+      label: "Unidades em estoque",
+      valor: totalUnidades,
+      cor: [230, 244, 234],
+    },
+    { label: "Estoque baixo", valor: estoqueBaixo, cor: [253, 244, 225] },
+    { label: "Sem estoque", valor: semEstoque, cor: [253, 232, 232] },
   ];
   const bW = pW / 4 - 3;
   boxes.forEach((b, i) => {
@@ -235,16 +246,19 @@ function EstoqueReal() {
   const colW = [10, 50, 55, 40, 63, 55];
   const colX = [];
   let cx = pL;
-  colW.forEach(w => { colX.push(cx); cx += w; });
+  colW.forEach((w) => {
+    colX.push(cx);
+    cx += w;
+  });
 
-  const ROW_H   = 9;    // altura de cada linha de dados
-  const HEAD_H  = 10;   // altura do cabeçalho
+  const ROW_H = 9; // altura de cada linha de dados
+  const HEAD_H = 10; // altura do cabeçalho
 
   // Função auxiliar: desenha uma célula (retângulo + texto recortado)
   function celula(colIdx, yLinha, texto, opts) {
-    const x  = colX[colIdx];
-    const w  = colW[colIdx];
-    const h  = opts.altura || ROW_H;
+    const x = colX[colIdx];
+    const w = colW[colIdx];
+    const h = opts.altura || ROW_H;
     const pad = 3;
 
     // Fundo
@@ -263,12 +277,12 @@ function EstoqueReal() {
     doc.setFont("helvetica", opts.negrito ? "bold" : "normal");
     doc.setFontSize(opts.tamanho || 9);
 
-    const maxChars = Math.floor((w - pad * 2) / (opts.tamanho || 9) * 5.5);
+    const maxChars = Math.floor(((w - pad * 2) / (opts.tamanho || 9)) * 5.5);
     let t = String(texto);
     if (t.length > maxChars) t = t.substring(0, maxChars - 1) + "…";
 
     const align = opts.centro ? "center" : "left";
-    const tx    = opts.centro ? x + w / 2 : x + pad;
+    const tx = opts.centro ? x + w / 2 : x + pad;
     doc.text(t, tx, yLinha + h / 2 + 1.5, { align });
   }
 
@@ -281,7 +295,14 @@ function EstoqueReal() {
 
   // Função: repete cabeçalho da tabela
   function cabecalhoTabela(yPos) {
-    const headers = ["Nº", "MARCA", "MODELO", "QTD DISPONÍVEL", "OBSERVAÇÃO", "STATUS"];
+    const headers = [
+      "Nº",
+      "MARCA",
+      "MODELO",
+      "QTD DISPONÍVEL",
+      "OBSERVAÇÃO",
+      "STATUS",
+    ];
     doc.setFillColor(42, 123, 228);
     doc.rect(pL, yPos, pW, HEAD_H, "F");
     linhaH(yPos, [42, 123, 228], 0.5);
@@ -303,7 +324,7 @@ function EstoqueReal() {
 
   // ── Ordenar ───────────────────────────────────────────────────────────────────
   const itens = [...estoque].sort((a, b) => {
-    const p = v => v === 0 ? 0 : v <= 5 ? 1 : 2;
+    const p = (v) => (v === 0 ? 0 : v <= 5 ? 1 : 2);
     return p(a.qtd) - p(b.qtd) || a.marca.localeCompare(b.marca);
   });
 
@@ -318,17 +339,22 @@ function EstoqueReal() {
 
     // Cor de fundo por status (tem prioridade) ou zebra
     let bgRow;
-    if      (b.qtd === 0)     bgRow = [253, 232, 232];
-    else if (b.qtd <= 5)      bgRow = [255, 248, 225];
-    else if (idx % 2 === 0)   bgRow = [245, 248, 255];
-    else                      bgRow = [255, 255, 255];
+    if (b.qtd === 0) bgRow = [253, 232, 232];
+    else if (b.qtd <= 5) bgRow = [255, 248, 225];
+    else if (idx % 2 === 0) bgRow = [245, 248, 255];
+    else bgRow = [255, 255, 255];
 
     // Fundo da linha inteira
     doc.setFillColor(...bgRow);
     doc.rect(pL, y, pW, ROW_H, "F");
 
     // Coluna 0 — Nº
-    celula(0, y, idx + 1, { bg: null, cor: [130,130,130], centro: true, tamanho: 8 });
+    celula(0, y, idx + 1, {
+      bg: null,
+      cor: [130, 130, 130],
+      centro: true,
+      tamanho: 8,
+    });
 
     // Coluna 1 — Marca
     celula(1, y, b.marca, { bg: null, negrito: true, tamanho: 9 });
@@ -338,27 +364,33 @@ function EstoqueReal() {
 
     // Coluna 3 — Quantidade (centralizada, colorida)
     let qtdCor;
-    if      (b.qtd === 0)  qtdCor = [180, 0, 0];
-    else if (b.qtd <= 5)   qtdCor = [160, 100, 0];
-    else                   qtdCor = [20, 120, 60];
-    celula(3, y, b.qtd, { bg: null, cor: qtdCor, negrito: true, centro: true, tamanho: 11 });
+    if (b.qtd === 0) qtdCor = [180, 0, 0];
+    else if (b.qtd <= 5) qtdCor = [160, 100, 0];
+    else qtdCor = [20, 120, 60];
+    celula(3, y, b.qtd, {
+      bg: null,
+      cor: qtdCor,
+      negrito: true,
+      centro: true,
+      tamanho: 11,
+    });
 
     // Coluna 4 — Observação (texto longo → tem 80 mm)
-    celula(4, y, b.obs || "—", { bg: null, cor: [80,80,80], tamanho: 8.5 });
+    celula(4, y, b.obs || "—", { bg: null, cor: [80, 80, 80], tamanho: 8.5 });
 
     // Coluna 5 — Status
     let statusTxt, sBg, sCor;
     if (b.qtd === 0) {
       statusTxt = "SEM ESTOQUE";
-      sBg  = [253, 232, 232];
+      sBg = [253, 232, 232];
       sCor = [180, 0, 0];
     } else if (b.qtd <= 5) {
       statusTxt = "REABASTECER";
-      sBg  = [255, 248, 225];
+      sBg = [255, 248, 225];
       sCor = [160, 100, 0];
     } else {
       statusTxt = "OK";
-      sBg  = [230, 244, 234];
+      sBg = [230, 244, 234];
       sCor = [20, 120, 60];
     }
     // Badge centralizado dentro da célula
@@ -369,7 +401,10 @@ function EstoqueReal() {
     doc.setTextColor(...sCor);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(7.5);
-    doc.text(statusTxt, bx + bw / 2, y + ROW_H / 2 + 1.5, { align: "center",maxwidth: bw - 2 });
+    doc.text(statusTxt, bx + bw / 2, y + ROW_H / 2 + 1.5, {
+      align: "center",
+      maxwidth: bw - 2,
+    });
 
     // Borda inferior da linha
     linhaH(y + ROW_H, [200, 200, 200], 0.2);
@@ -397,7 +432,10 @@ function EstoqueReal() {
 
   // ── Legenda ───────────────────────────────────────────────────────────────────
   y += 16;
-  if (y > 185) { doc.addPage(); y = 15; }
+  if (y > 185) {
+    doc.addPage();
+    y = 15;
+  }
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(8.5);
@@ -406,16 +444,32 @@ function EstoqueReal() {
   y += 5;
 
   [
-    [253, 232, 232, 180,  0,  0, "SEM ESTOQUE — quantidade zerada. Reposição imediata necessária."],
-    [255, 248, 225, 160,100,  0, "REABASTECER — estoque baixo (5 unidades ou menos)."],
-    [245, 248, 255,  30, 30,100, "OK (linhas pares) — estoque adequado."],
-    [255, 255, 255,  30, 30, 30, "OK (linhas ímpares) — estoque adequado."],
-  ].forEach(([r,g,b,tr,tg,tb,txt]) => {
-    doc.setFillColor(r,g,b);
-    doc.setDrawColor(190,190,190);
+    [
+      253,
+      232,
+      232,
+      180,
+      0,
+      0,
+      "SEM ESTOQUE — quantidade zerada. Reposição imediata necessária.",
+    ],
+    [
+      255,
+      248,
+      225,
+      160,
+      100,
+      0,
+      "REABASTECER — estoque baixo (5 unidades ou menos).",
+    ],
+    [245, 248, 255, 30, 30, 100, "OK (linhas pares) — estoque adequado."],
+    [255, 255, 255, 30, 30, 30, "OK (linhas ímpares) — estoque adequado."],
+  ].forEach(([r, g, b, tr, tg, tb, txt]) => {
+    doc.setFillColor(r, g, b);
+    doc.setDrawColor(190, 190, 190);
     doc.setLineWidth(0.3);
     doc.rect(pL, y - 3.5, 10, 5, "FD");
-    doc.setTextColor(tr,tg,tb);
+    doc.setTextColor(tr, tg, tb);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.text(txt, pL + 12, y);
@@ -429,8 +483,12 @@ function EstoqueReal() {
     doc.setFontSize(7.5);
     doc.setTextColor(160, 160, 160);
     doc.text(
-      "Sistema de Controle de Estoque de Baterias · Matheus Juliano · Página " + p + " de " + totalPags,
-      pL, 204
+      "Sistema de Controle de Estoque de Baterias · Matheus Juliano · Página " +
+        p +
+        " de " +
+        totalPags,
+      pL,
+      204,
     );
   }
 

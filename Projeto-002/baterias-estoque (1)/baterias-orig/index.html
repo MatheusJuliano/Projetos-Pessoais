@@ -15,10 +15,7 @@
   </head>
 
   <body>
-    <div
-      id="toggleNoturno"
-      title="Alternar modo noturno"
-    >
+    <div id="toggleNoturno" title="Alternar modo noturno">
       <div id="toggleTrack">
         <div id="toggleThumb">
           <span id="toggleIcon">🌙</span>
@@ -71,30 +68,27 @@
       </div>
 
       <div class="card">
-  <h3>Estoque</h3>
-  <div class="tabela-scroll">
-    <table>
-      <thead>
-        <tr>
-          <th>Marca</th>
-          <th>Modelo</th>
-          <th>Qtd</th>
-          <th>Obs</th>
-          
-        </tr>
-      </thead>
+        <h3>Estoque</h3>
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Qtd</th>
+                <th>Obs</th>
+              </tr>
+            </thead>
 
-      <tbody id="tabelaEstoque"></tbody>
-    </table>
-  </div>
-  <button onclick="EstoqueReal()" class="btn-relatorio">
-    Gerar Relatório de Estoque
-  </button>
+            <tbody id="tabelaEstoque"></tbody>
+          </table>
+        </div>
+        <button onclick="EstoqueReal()" class="btn-relatorio">
+          Gerar Relatório de Estoque
+        </button>
 
-  <h3>Total de itens: <span id="total">0</span></h3>
-
-  
-</div>
+        <h3>Total de itens: <span id="total">0</span></h3>
+      </div>
       <div class="card">
         <h3>Movimentações</h3>
         <table class="tabela-scroll">
@@ -114,18 +108,20 @@
         <h3>Relatório de vendas por dia</h3>
         <input type="date" id="dataBusca" />
         <button onclick="relatorio()">Buscar</button>
-        <div class="tabela-scroll"><table>
-          <thead>
-            <tr>
-              <th>Tipo</th>
-              <th>Modelo</th>
-              <th>Qtd</th>
-              <th>Hora</th>
-            </tr>
-          </thead>
-          <tbody id="relatorio"></tbody>
-        </table>
-      </div></div>
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Modelo</th>
+                <th>Qtd</th>
+                <th>Hora</th>
+              </tr>
+            </thead>
+            <tbody id="relatorio"></tbody>
+          </table>
+        </div>
+      </div>
 
       <div class="card">
         <h3>Registro de acesso</h3>

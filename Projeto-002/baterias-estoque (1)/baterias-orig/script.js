@@ -113,9 +113,7 @@ function adicionar() {
     return;
   }
 
-  let bat = estoque.find(
-  (b) => b.modelo === modelo && b.marca === marca,
-);
+  let bat = estoque.find((b) => b.modelo === modelo && b.marca === marca);
   if (bat) {
     bat.qtd += qtd;
   } else {
@@ -159,9 +157,7 @@ function vender() {
 
   let marca = document.getElementById("marcaVenda").value;
 
-let bat = estoque.find(
-  (b) => b.modelo === modelo && b.marca === marca,
-);
+  let bat = estoque.find((b) => b.modelo === modelo && b.marca === marca);
   if (!bat || bat.qtd < qtd) {
     alert("Estoque insuficiente");
     return;
@@ -243,4 +239,3 @@ function exportarExcel() {
   link.download = "relatorio_baterias.csv";
   link.click();
 }
-

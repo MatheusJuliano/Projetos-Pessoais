@@ -103,8 +103,6 @@ th {
   z-index: 1;
 }
 
-
-
 #acessos {
   max-height: 150px;
   overflow-y: auto;
@@ -249,27 +247,27 @@ body.noturno .tabela-scroll {
   color: #888;
   border-top: 1px solid #dde3ee;
 }
- 
+
 .footer strong {
   color: #2a7be4;
 }
- 
+
 .footer span {
   display: block;
   margin-top: 4px;
   font-size: 0.75rem;
   color: #aaa;
 }
- 
+
 body.noturno .footer {
   border-top-color: #2e3340;
   color: #6b7280;
 }
- 
+
 body.noturno .footer strong {
   color: #5a9ef8;
 }
- 
+
 body.noturno .footer span {
   color: #4b5a72;
 }
@@ -316,7 +314,7 @@ body.noturno .status-critico {
   margin-bottom: 12px;
   padding: 10px;
   font-weight: bold;
-  border-radius:6px;
+  border-radius: 6px;
   margin-top: 12px;
   justify-content: center;
 }
