@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="/css/auth.css"/>
+  <title>Nova Senha — Controle de Baterias</title>
+</head>
+<body>
+  <div id="toggleNoturno"><div id="toggleTrack"><div id="toggleThumb"><span id="toggleIcon">🌙</span></div></div></div>
+
+  <div class="auth-card">
+    <div class="auth-logo">🔒</div>
+    <h1>Criar nova senha</h1>
+    <p class="subtitulo">Escolha uma senha segura com no mínimo 8 caracteres</p>
+
+    <div id="formArea">
+      <div class="campo"><label for="senha">Nova senha</label><input type="password" id="senha" placeholder="Nova senha (mín. 8 caracteres)" autocomplete="new-password"/></div>
+      <div class="campo"><label for="confirmar">Confirmar nova senha</label><input type="password" id="confirmar" placeholder="Repita a nova senha" autocomplete="new-password"/></div>
+      <button class="btn-primary" id="btnSalvar" onclick="salvar()">Salvar nova senha</button>
+      <div class="msg-erro" id="msgErro"></div>
+    </div>
+
+    <div id="sucessoArea" style="display:none;text-align:center;padding:10px 0;">
+      <div style="font-size:3rem;margin-bottom:12px;">✅</div>
+      <p style="color:#22c55e;font-weight:700;font-size:1rem;margin-bottom:8px;">Senha alterada com sucesso!</p>
+      <p style="color:#666;font-size:.85rem;">Redirecionando para o login...</p>
+    </div>
+
+    <div class="footer-auth">© 2026 <strong>Matheus Juliano</strong></div>
+  </div>
+
+  <script>
+    if (localStorage.getItem('modoNoturno')==='1'){document.body.classList.add('noturno');document.getElementById('toggleIcon').textContent='☀️';}
+    document.getElementById('toggleNoturno').addEventListener('click',()=>{const a=document.body.classList.toggle('noturno');document.getElementById('toggleIcon').textContent=a?'☀️':'🌙';localStorage.setItem('modoNoturno',a?'1':'0');});
+
+    const token = new URLSearchParams(location.search).get('token') || '';
+    if (!token) window.location.href = '/login';
+
+    async function salvar() {
+      const btn=document.getElementById('btnSalvar');
+      const erro=document.getElementById('msgErro');
+      erro.textContent=''; btn.disabled=true; btn.textContent='Salvando...';
+      try {
+        const r = await fetch('/api/auth/redefinir-senha',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,senha:document.getElementById('senha').value,confirmar:document.getElementById('confirmar').value})});
+        const d = await r.json();
+        if (d.ok) { document.getElementById('formArea').style.display='none'; document.getElementById('sucessoArea').style.display='block'; setTimeout(()=>window.location.href='/login',2500); }
+        else { erro.textContent='❌ '+d.erro; btn.disabled=false; btn.textContent='Salvar nova senha'; }
+      } catch { erro.textContent='❌ Erro de conexão.'; btn.disabled=false; btn.textContent='Salvar nova senha'; }
+    }
+  </script>
+</body>
+</html>

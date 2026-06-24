@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="/css/auth.css"/>
+  <title>Criar Conta — Controle de Baterias</title>
+</head>
+<body>
+  <div id="toggleNoturno"><div id="toggleTrack"><div id="toggleThumb"><span id="toggleIcon">🌙</span></div></div></div>
+
+  <div class="auth-card">
+    <div class="auth-logo">🔋</div>
+    <h1>Criar Conta</h1>
+    <p class="subtitulo">Preencha os dados para se cadastrar</p>
+
+    <div class="campo">
+      <label for="usuario">Usuário <span style="color:#e53e3e">*</span></label>
+      <input type="text" id="usuario" placeholder="Escolha um nome de usuário" autocomplete="username"/>
+    </div>
+
+    <div class="campo">
+      <label for="senha">Senha <span style="color:#e53e3e">*</span> <span style="color:#888;font-weight:400">(mín. 6 caracteres)</span></label>
+      <input type="password" id="senha" placeholder="Crie uma senha" autocomplete="new-password"/>
+    </div>
+
+    <div class="campo">
+      <label for="confirmar">Confirmar senha <span style="color:#e53e3e">*</span></label>
+      <input type="password" id="confirmar" placeholder="Repita a senha" autocomplete="new-password"/>
+    </div>
+
+    <div class="campo">
+      <label for="email">
+        E-mail <span style="color:#888;font-weight:400">(opcional — usado só para recuperar senha)</span>
+      </label>
+      <input type="email" id="email" placeholder="seu@email.com (opcional)" autocomplete="email"/>
+    </div>
+
+    <button class="btn-primary" id="btnReg" onclick="registrar()">Criar conta</button>
+    <div class="msg-erro" id="msgErro"></div>
+    <div class="msg-ok"   id="msgOk"></div>
+
+    <a class="link-secundario" href="/login">← Já tenho conta</a>
+    <div class="footer-auth">© 2026 <strong>Matheus Juliano</strong></div>
+  </div>
+
+  <script>
+    if (localStorage.getItem('modoNoturno')==='1'){document.body.classList.add('noturno');document.getElementById('toggleIcon').textContent='☀️';}
+    document.getElementById('toggleNoturno').addEventListener('click',()=>{const a=document.body.classList.toggle('noturno');document.getElementById('toggleIcon').textContent=a?'☀️':'🌙';localStorage.setItem('modoNoturno',a?'1':'0');});
+
+    async function registrar() {
+      const btn=document.getElementById('btnReg'), erro=document.getElementById('msgErro'), ok=document.getElementById('msgOk');
+      erro.textContent=''; ok.textContent='';
+      btn.disabled=true; btn.textContent='Criando conta...';
+      try {
+        const r = await fetch('/api/auth/registro',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            usuario:  document.getElementById('usuario').value.trim(),
+            senha:    document.getElementById('senha').value,
+            confirmar:document.getElementById('confirmar').value,
+            email:    document.getElementById('email').value.trim()
+          })});
+        const d = await r.json();
+        if(d.ok){ ok.textContent='✅ Conta criada! Redirecionando...'; setTimeout(()=>window.location.href='/',1000); }
+        else{ erro.textContent='❌ '+d.erro; btn.disabled=false; btn.textContent='Criar conta'; }
+      } catch { erro.textContent='❌ Erro de conexão.'; btn.disabled=false; btn.textContent='Criar conta'; }
+    }
+  </script>
+</body>
+</html>

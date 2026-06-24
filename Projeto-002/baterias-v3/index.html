@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Sistema de Controle de Baterias</title>
+    <style>
+      /* Barra do usuário logado */
+      #barraUsuario {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+        border-radius: 10px;
+        padding: 10px 18px;
+        margin-bottom: 18px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: background 0.4s, box-shadow 0.4s;
+      }
+      body.noturno #barraUsuario {
+        background: #23272f;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      }
+      #barraUsuario .usuario-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.95rem;
+        color: #333;
+        transition: color 0.4s;
+      }
+      body.noturno #barraUsuario .usuario-info { color: #c8d8f8; }
+      #barraUsuario .usuario-info strong { color: #2a7be4; }
+      body.noturno #barraUsuario .usuario-info strong { color: #5a9ef8; }
+      #barraUsuario .usuario-info span.avatar {
+        background: linear-gradient(135deg, #2a7be4, #1e5fb0);
+        color: white;
+        border-radius: 50%;
+        width: 34px; height: 34px;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 1rem;
+      }
+      #barraUsuario .acoes-usuario {
+        display: flex;
+        gap: 8px;
+      }
+      #barraUsuario button {
+        width: auto;
+        padding: 7px 16px;
+        font-size: 0.82rem;
+      }
+      #btnSair { background: #e53e3e; }
+      #btnSair:hover { background: #c53030; }
+    </style>
+  </head>
+  <body>
+    <div id="toggleNoturno" title="Alternar modo noturno">
+      <div id="toggleTrack"><div id="toggleThumb"><span id="toggleIcon">🌙</span></div></div>
+    </div>
+
+    <h1>Controle de Estoque de Baterias</h1>
+
+    <!-- Barra do usuário logado -->
+    <div id="barraUsuario">
+      <div class="usuario-info">
+        <span class="avatar" id="avatarLetra">?</span>
+        <span>Logado como: <strong id="nomeUsuario">—</strong></span>
+      </div>
+      <div class="acoes-usuario">
+        <button onclick="gerarPDF()">📄 Relatório PDF</button>
+        <button id="btnSair" onclick="sair()">Sair</button>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="card">
+        <h3>Adicionar Bateria</h3>
+        <input type="text" id="marca" list="lista-marcas" placeholder="Marca" autocomplete="off" />
+        <input id="modelo" placeholder="Modelo" autocomplete="off" />
+        <input id="quantidade" type="number" placeholder="Quantidade" min="1" />
+        <textarea id="obs" placeholder="Observação (ex: Bateria América de Recife)"></textarea>
+        <button onclick="adicionar()">Adicionar</button>
+      </div>
+
+      <datalist id="lista-marcas">
+        <option value="Moura"></option>
+        <option value="Heliar"></option>
+        <option value="Zetta"></option>
+        <option value="Cral"></option>
+        <option value="Júpiter"></option>
+      </datalist>
+
+      <div class="card">
+        <h3>Registrar Venda</h3>
+        <input type="text" id="marcaVenda" list="lista-marcas" placeholder="Marca" autocomplete="off" />
+        <input id="modeloVenda" placeholder="Modelo" autocomplete="off" />
+        <input id="qtdVenda" type="number" placeholder="Quantidade" min="1" />
+        <button onclick="vender()">Registrar Venda</button>
+      </div>
+
+      <div class="card">
+        <h3>Estoque</h3>
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+              <tr><th>Marca</th><th>Modelo</th><th>Qtd</th><th>Obs</th></tr>
+            </thead>
+            <tbody id="tabelaEstoque"></tbody>
+          </table>
+        </div>
+        <button onclick="EstoqueReal()" class="btn-relatorio">Gerar Relatório de Estoque</button>
+        <h3>Total de itens: <span id="total">0</span></h3>
+      </div>
+
+      <div class="card">
+        <h3>Movimentações</h3>
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+              <tr><th>Tipo</th><th>Marca</th><th>Modelo</th><th>Qtd</th><th>Data</th><th>Ação</th></tr>
+            </thead>
+            <tbody id="mov"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Relatório de vendas por dia</h3>
+        <input type="date" id="dataBusca" />
+        <button onclick="relatorio()">Buscar</button>
+        <div class="tabela-scroll">
+          <table>
+            <thead>
+              <tr><th>Tipo</th><th>Modelo</th><th>Qtd</th><th>Hora</th></tr>
+            </thead>
+            <tbody id="relatorio"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Histórico de Acessos</h3>
+        <ul id="acessos"></ul>
+      </div>
+
+      <div class="buttonG">
+        <button onclick="exportarExcel()">Gerar Relatório Excel</button>
+      </div>
+    </div>
+
+    <footer class="footer">
+      © 2026 <strong>Matheus Juliano</strong> — Todos os direitos reservados.<br />
+      <span>Sistema de Controle de Estoque de Baterias · Versão 2.0</span>
+    </footer>
+
+    <script src="libs/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+    <script src="relatorio.js"></script>
+    <script src="init.js"></script>
+
+    <script>
+      // ── Resgata sessão do login.html ──────────────────────────
+      (function() {
+        const raw = sessionStorage.getItem("sessaoPendente");
+        if (!raw) {
+          // Sem sessão: redireciona para login
+          window.location.replace("login.html");
+          return;
+        }
+
+        const sessao = JSON.parse(raw);
+        sessionStorage.removeItem("sessaoPendente");
+
+        // Recupera dados do usuário do localStorage
+        const KEY_USERS = "usuarios_v2";
+        const usuarios  = JSON.parse(localStorage.getItem(KEY_USERS)) || {};
+        const u         = usuarios[sessao.usuario];
+
+        // Monta objeto usuarioAtual (compartilhado com relatorio.js)
+        usuarioAtual = {
+          usuario: sessao.usuario,
+          entrada: new Date(sessao.entrada),
+          saida:   null,
+          acoes:   []
+        };
+
+        // Registra acesso
+        if (u) {
+          u.acessos = u.acessos || [];
+          u.acessos.push(usuarioAtual);
+          localStorage.setItem(KEY_USERS, JSON.stringify(usuarios));
+        }
+
+        // Atualiza barra
+        document.getElementById("nomeUsuario").textContent = sessao.usuario;
+        document.getElementById("avatarLetra").textContent = sessao.usuario.charAt(0).toUpperCase();
+
+        // Carrega dados e renderiza
+        carregarGlobal();
+        atualizar();
+
+        // Aviso de primeiro acesso
+        const jaAcessou = u && u.acessos && u.acessos.length <= 1;
+        if (jaAcessou) {
+          setTimeout(() => alert("Conta criada! Bem-vindo, " + sessao.usuario + "!\n\nGuarde sua senha — ela não pode ser recuperada."), 200);
+        }
+      })();
+    </script>
+  </body>
+</html>

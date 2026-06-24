@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Controle de Baterias</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1a2a4a 0%, #2a4a8a 50%, #1a3a6a 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.4s, color 0.4s;
+      }
+
+      body.noturno {
+        background: linear-gradient(135deg, #0a0f1a 0%, #111830 50%, #0d1525 100%);
+      }
+
+      /* Toggle noturno */
+      #toggleNoturno {
+        position: fixed;
+        top: 20px;
+        right: 24px;
+        z-index: 9999;
+        cursor: pointer;
+      }
+      #toggleTrack {
+        width: 64px; height: 32px;
+        background: linear-gradient(135deg, #2a7be4, #1e5fb0);
+        border-radius: 50px; padding: 3px;
+        box-shadow: 0 0 0 2px rgba(42,123,228,0.3), 0 4px 15px rgba(42,123,228,0.25);
+        transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.1s ease;
+        display: flex; align-items: center;
+      }
+      #toggleThumb {
+        width: 26px; height: 26px;
+        background: #fff; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.4s, box-shadow 0.4s;
+        transform: translateX(0);
+      }
+      body.noturno #toggleTrack {
+        background: linear-gradient(135deg, #0f0f1a, #1a1040);
+        box-shadow: 0 0 0 2px rgba(140,100,255,0.4), 0 4px 20px rgba(100,60,255,0.3);
+      }
+      body.noturno #toggleThumb {
+        transform: translateX(32px);
+        background: #1a1040;
+        box-shadow: 0 2px 12px rgba(120,80,255,0.5);
+      }
+
+      /* Card de login */
+      .login-card {
+        background: white;
+        border-radius: 16px;
+        padding: 48px 40px 40px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+        text-align: center;
+        transition: background 0.4s, box-shadow 0.4s;
+      }
+
+      body.noturno .login-card {
+        background: #1e2330;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      }
+
+      .login-logo {
+        font-size: 3rem;
+        margin-bottom: 8px;
+      }
+
+      .login-card h1 {
+        font-size: 1.35rem;
+        color: #1a2a4a;
+        margin-bottom: 4px;
+        font-weight: 700;
+        transition: color 0.4s;
+      }
+
+      body.noturno .login-card h1 { color: #c8d8f8; }
+
+      .login-card p.subtitulo {
+        font-size: 0.82rem;
+        color: #888;
+        margin-bottom: 28px;
+        transition: color 0.4s;
+      }
+
+      body.noturno .login-card p.subtitulo { color: #6b7280; }
+
+      .campo {
+        position: relative;
+        margin-bottom: 16px;
+        text-align: left;
+      }
+
+      .campo label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 5px;
+        transition: color 0.4s;
+      }
+
+      body.noturno .campo label { color: #9aa5b8; }
+
+      .campo input {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1.5px solid #dde3ee;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        outline: none;
+        background: #f8faff;
+        color: #1a2a4a;
+        transition: border-color 0.2s, box-shadow 0.2s, background 0.4s, color 0.4s;
+      }
+
+      .campo input:focus {
+        border-color: #2a7be4;
+        box-shadow: 0 0 0 3px rgba(42,123,228,0.15);
+        background: white;
+      }
+
+      body.noturno .campo input {
+        background: #131720;
+        border-color: #2e3a50;
+        color: #c8d8f8;
+      }
+
+      body.noturno .campo input:focus {
+        border-color: #4a7be4;
+        box-shadow: 0 0 0 3px rgba(74,123,228,0.2);
+        background: #1a2030;
+      }
+
+      body.noturno .campo input::placeholder { color: #4a5568; }
+
+      #msgInfo {
+        font-size: 0.76rem;
+        color: #888;
+        margin: -8px 0 14px;
+        text-align: left;
+        transition: color 0.4s;
+      }
+
+      body.noturno #msgInfo { color: #6b7280; }
+
+      .btn-login {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #2a7be4, #1e5fb0);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.1s;
+        letter-spacing: 0.03em;
+        margin-top: 4px;
+      }
+
+      .btn-login:hover { opacity: 0.9; }
+      .btn-login:active { transform: scale(0.98); }
+
+      #msgErro {
+        margin-top: 14px;
+        font-size: 0.82rem;
+        color: #e53e3e;
+        min-height: 20px;
+        transition: color 0.4s;
+      }
+
+      body.noturno #msgErro { color: #fc8181; }
+
+      .footer-login {
+        margin-top: 28px;
+        font-size: 0.72rem;
+        color: #aaa;
+        transition: color 0.4s;
+      }
+
+      body.noturno .footer-login { color: #4a5568; }
+
+      .footer-login strong { color: #2a7be4; }
+      body.noturno .footer-login strong { color: #5a9ef8; }
+    </style>
+  </head>
+  <body>
+
+    <div id="toggleNoturno" title="Alternar modo noturno">
+      <div id="toggleTrack">
+        <div id="toggleThumb"><span id="toggleIcon">🌙</span></div>
+      </div>
+    </div>
+
+    <div class="login-card">
+      <div class="login-logo">🔋</div>
+      <h1>Controle de Estoque de Baterias</h1>
+      <p class="subtitulo">Faça login para acessar o sistema</p>
+
+      <div class="campo">
+        <label for="usuario">Usuário</label>
+        <input type="text" id="usuario" placeholder="Digite seu usuário" autocomplete="off" />
+      </div>
+
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" placeholder="Digite sua senha" autocomplete="off" />
+      </div>
+
+      <p id="msgInfo">Primeiro acesso: a senha digitada será cadastrada automaticamente.</p>
+
+      <button class="btn-login" onclick="fazerLogin()">Entrar</button>
+
+      <div id="msgErro"></div>
+
+      <div class="footer-login">
+        © 2026 <strong>Matheus Juliano</strong> — Todos os direitos reservados.
+      </div>
+    </div>
+
+    <script>
+      // ── Toggle noturno ────────────────────────────────────────
+      if (localStorage.getItem("modoNoturno") === "1") {
+        document.body.classList.add("noturno");
+        document.getElementById("toggleIcon").textContent = "☀️";
+      }
+      document.getElementById("toggleNoturno").addEventListener("click", () => {
+        const ativo = document.body.classList.toggle("noturno");
+        document.getElementById("toggleIcon").textContent = ativo ? "☀️" : "🌙";
+        localStorage.setItem("modoNoturno", ativo ? "1" : "0");
+      });
+
+      // ── Tecla Enter no campo senha ────────────────────────────
+      document.getElementById("senha").addEventListener("keydown", e => {
+        if (e.key === "Enter") fazerLogin();
+      });
+      document.getElementById("usuario").addEventListener("keydown", e => {
+        if (e.key === "Enter") document.getElementById("senha").focus();
+      });
+
+      // ── Hash SHA-256 ──────────────────────────────────────────
+      async function hashSenha(senha) {
+        const encoder = new TextEncoder();
+        const data    = encoder.encode(senha + "baterias_salt_2026");
+        const hashBuf = await crypto.subtle.digest("SHA-256", data);
+        const hashArr = Array.from(new Uint8Array(hashBuf));
+        return hashArr.map(b => b.toString(16).padStart(2,"0")).join("");
+      }
+
+      // ── Login ─────────────────────────────────────────────────
+      async function fazerLogin() {
+        const nome  = document.getElementById("usuario").value.trim();
+        const senha = document.getElementById("senha").value;
+        const msgErro = document.getElementById("msgErro");
+        msgErro.textContent = "";
+
+        if (!nome)  { msgErro.textContent = "⚠️ Digite um nome de usuário."; return; }
+        if (!senha) { msgErro.textContent = "⚠️ Digite uma senha."; return; }
+
+        const KEY_USERS = "usuarios_v2";
+        let usuarios = JSON.parse(localStorage.getItem(KEY_USERS)) || {};
+        let hash     = await hashSenha(senha);
+
+        if (!usuarios[nome]) {
+          // Primeiro acesso — cria conta
+          usuarios[nome] = { hashSenha: hash, acessos: [] };
+          localStorage.setItem(KEY_USERS, JSON.stringify(usuarios));
+        } else {
+          // Valida senha
+          if (usuarios[nome].hashSenha !== hash) {
+            msgErro.textContent = "❌ Senha incorreta.";
+            document.getElementById("senha").value = "";
+            document.getElementById("senha").focus();
+            return;
+          }
+        }
+
+        // Salva sessão pendente para index.html resgatar
+        const sessao = {
+          usuario: nome,
+          entrada: new Date().toISOString(),
+          saida: null,
+          acoes: []
+        };
+        sessionStorage.setItem("sessaoPendente", JSON.stringify(sessao));
+
+        // Redireciona para o sistema
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

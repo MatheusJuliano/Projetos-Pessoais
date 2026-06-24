@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Votação — CIPA 2026</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+</head>
+<body>
+
+  <!-- ── TELA LOGIN ───────────────────────────────────────── -->
+  <div class="screen active" id="sc-login">
+    <div class="login-bg">
+      <div class="login-card">
+        <div class="logo-wrap">
+          <div class="logo-circle">
+            <i class="ti ti-building-community"></i>
+          </div>
+          <div class="logo-name">Sistema de Votação</div>
+          <div class="logo-sub">Eleição de Representantes — CIPA 2026</div>
+        </div>
+        <div class="field-row">
+          <span class="field-lbl">Contrato:</span>
+          <input id="f-contrato" placeholder="Código do contrato" />
+        </div>
+        <div class="field-row">
+          <span class="field-lbl">Usuário:</span>
+          <input id="f-usuario" placeholder="Matrícula" />
+        </div>
+        <div class="field-row">
+          <span class="field-lbl">Senha:</span>
+          <input id="f-senha" type="password" placeholder="Sua senha" />
+        </div>
+        <div class="btn-row">
+          <button class="btn-main" onclick="doLogin()">
+            <i class="ti ti-login"></i> Acessar
+          </button>
+          <button class="btn-ghost">Suporte</button>
+        </div>
+        <div class="login-err" id="login-err"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TELA VOTAÇÃO ─────────────────────────────────────── -->
+  <div class="screen" id="sc-vote">
+    <div class="vote-wrap">
+      <div class="vote-header">
+        <div class="vote-title">Cédula de votação</div>
+        <p>Selecione um candidato, justifique seu voto e registre suas solicitações.</p>
+        <div class="vote-user">
+          <i class="ti ti-user"></i>
+          <span id="vt-user">—</span>
+        </div>
+      </div>
+
+      <div class="cands">
+        <div class="cand" id="card-0" onclick="selCand(0)">
+          <div class="cand-av">AM</div>
+          <div class="cand-name">Ana Martins</div>
+          <div class="cand-cargo">Operações</div>
+          <div class="cand-radio">
+            <input type="radio" name="voto" id="r0" />
+            <label for="r0">Votar neste candidato</label>
+          </div>
+        </div>
+        <div class="cand" id="card-1" onclick="selCand(1)">
+          <div class="cand-av">CP</div>
+          <div class="cand-name">Carlos Pinto</div>
+          <div class="cand-cargo">Logística</div>
+          <div class="cand-radio">
+            <input type="radio" name="voto" id="r1" />
+            <label for="r1">Votar neste candidato</label>
+          </div>
+        </div>
+        <div class="cand" id="card-2" onclick="selCand(2)">
+          <div class="cand-av">FL</div>
+          <div class="cand-name">Fernanda Lima</div>
+          <div class="cand-cargo">Administrativo</div>
+          <div class="cand-radio">
+            <input type="radio" name="voto" id="r2" />
+            <label for="r2">Votar neste candidato</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="vote-fields" id="vf" style="display:none;">
+        <div class="vf-title">
+          <i class="ti ti-pencil"></i>
+          Sobre seu voto em <span id="vf-nome"></span>
+        </div>
+        <label class="vf-lbl">Por que você vota neste candidato?</label>
+        <textarea id="ta-porque" placeholder="Descreva os motivos do seu voto..."></textarea>
+        <label class="vf-lbl">O que você gostaria de pedir a este candidato?</label>
+        <textarea id="ta-pedir" placeholder="Escreva suas sugestões ou solicitações..."></textarea>
+      </div>
+
+      <div class="vote-hint" id="vt-hint">Selecione um candidato para continuar.</div>
+      <button class="btn-votar" id="btn-vt" disabled onclick="finalizarVoto()">
+        <i class="ti ti-check"></i> Finalizar voto
+      </button>
+    </div>
+  </div>
+
+  <!-- ── TELA SUCESSO ─────────────────────────────────────── -->
+  <div class="screen" id="sc-suc">
+    <div class="suc-wrap">
+      <div class="suc-box">
+        <div class="suc-icon">
+          <i class="ti ti-circle-check"></i>
+        </div>
+        <div class="suc-title">Voto concluído com sucesso!</div>
+        <div class="suc-sub">Seu voto foi registrado com segurança.</div>
+        <div class="suc-id" id="suc-id">—</div>
+        <div class="suc-msg">A urna está liberada para o próximo votante.</div>
+        <button class="btn-novo" onclick="voltarLogin()">
+          <i class="ti ti-arrow-left"></i> Próximo votante
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

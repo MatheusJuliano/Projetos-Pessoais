@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="/css/auth.css"/>
+  <title>Login — Controle de Baterias</title>
+</head>
+<body>
+  <div id="toggleNoturno"><div id="toggleTrack"><div id="toggleThumb"><span id="toggleIcon">🌙</span></div></div></div>
+
+  <div class="auth-card">
+    <div class="auth-logo">🔋</div>
+    <h1>Controle de Baterias</h1>
+    <p class="subtitulo">Faça login para acessar o sistema</p>
+
+    <div class="campo">
+      <label for="usuario">Usuário</label>
+      <input type="text" id="usuario" placeholder="Seu usuário" autocomplete="username"/>
+    </div>
+    <div class="campo">
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" placeholder="Sua senha" autocomplete="current-password"/>
+    </div>
+
+    <button class="btn-primary" id="btnLogin" onclick="fazerLogin()">Entrar</button>
+    <div class="msg-erro" id="msgErro"></div>
+
+    <a class="link-secundario" href="/esqueci-senha">Esqueci minha senha</a>
+
+    <div class="divisor">ou</div>
+    <a href="/registro" style="display:block;text-align:center;padding:11px;background:#eef1f4;border-radius:8px;font-size:.95rem;font-weight:600;color:#333;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#dde3ee'" onmouseout="this.style.background='#eef1f4'">
+      Criar nova conta
+    </a>
+
+    <div class="footer-auth" style="margin-top:20px;">© 2026 <strong>Matheus Juliano</strong></div>
+  </div>
+
+  <script>
+    if (localStorage.getItem('modoNoturno')==='1'){document.body.classList.add('noturno');document.getElementById('toggleIcon').textContent='☀️';}
+    document.getElementById('toggleNoturno').addEventListener('click',()=>{const a=document.body.classList.toggle('noturno');document.getElementById('toggleIcon').textContent=a?'☀️':'🌙';localStorage.setItem('modoNoturno',a?'1':'0');});
+
+    const params = new URLSearchParams(location.search);
+    if (params.get('erro')==='link_expirado') document.getElementById('msgErro').textContent='⚠️ Link de redefinição expirado. Solicite um novo.';
+
+    document.getElementById('usuario').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('senha').focus(); });
+    document.getElementById('senha').addEventListener('keydown',   e => { if(e.key==='Enter') fazerLogin(); });
+
+    async function fazerLogin() {
+      const btn=document.getElementById('btnLogin'), erro=document.getElementById('msgErro');
+      erro.textContent=''; btn.disabled=true; btn.textContent='Entrando...';
+      try {
+        const r = await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({usuario:document.getElementById('usuario').value.trim(), senha:document.getElementById('senha').value})});
+        const d = await r.json();
+        if(d.ok){ window.location.href='/'; }
+        else{ erro.textContent='❌ '+d.erro; btn.disabled=false; btn.textContent='Entrar'; document.getElementById('senha').value=''; }
+      } catch { erro.textContent='❌ Erro de conexão.'; btn.disabled=false; btn.textContent='Entrar'; }
+    }
+  </script>
+</body>
+</html>

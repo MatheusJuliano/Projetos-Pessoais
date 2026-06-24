@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="/css/auth.css"/>
+  <title>Esqueci a Senha — Controle de Baterias</title>
+</head>
+<body>
+  <div id="toggleNoturno"><div id="toggleTrack"><div id="toggleThumb"><span id="toggleIcon">🌙</span></div></div></div>
+
+  <div class="auth-card">
+    <div class="auth-logo">🔑</div>
+    <h1>Recuperar senha</h1>
+    <p class="subtitulo">Informe seu usuário e o e-mail cadastrado na conta</p>
+
+    <div id="formArea">
+      <div class="campo">
+        <label for="usuario">Usuário</label>
+        <input type="text" id="usuario" placeholder="Seu nome de usuário" autocomplete="username"/>
+      </div>
+      <div class="campo">
+        <label for="email">E-mail cadastrado</label>
+        <input type="email" id="email" placeholder="seu@email.com" autocomplete="email"/>
+      </div>
+      <p style="font-size:.78rem;color:#888;margin:-6px 0 14px;text-align:left;">
+        ⚠️ Só funciona se você cadastrou um e-mail ao criar a conta.
+      </p>
+      <button class="btn-primary" id="btnEnviar" onclick="enviar()">Enviar link de redefinição</button>
+      <div class="msg-erro" id="msgErro"></div>
+    </div>
+
+    <div id="sucessoArea" style="display:none;text-align:center;padding:10px 0;">
+      <div style="font-size:3rem;margin-bottom:12px;">📧</div>
+      <p style="color:#22c55e;font-weight:700;font-size:1rem;margin-bottom:8px;">E-mail enviado!</p>
+      <p style="color:#666;font-size:.85rem;line-height:1.6;">
+        Se os dados estiverem corretos, você receberá um link em breve.<br>
+        <strong>Verifique também a caixa de spam.</strong>
+      </p>
+    </div>
+
+    <a class="link-secundario" href="/login">← Voltar para o login</a>
+    <div class="footer-auth">© 2026 <strong>Matheus Juliano</strong></div>
+  </div>
+
+  <script>
+    if (localStorage.getItem('modoNoturno')==='1'){document.body.classList.add('noturno');document.getElementById('toggleIcon').textContent='☀️';}
+    document.getElementById('toggleNoturno').addEventListener('click',()=>{const a=document.body.classList.toggle('noturno');document.getElementById('toggleIcon').textContent=a?'☀️':'🌙';localStorage.setItem('modoNoturno',a?'1':'0');});
+
+    async function enviar() {
+      const btn=document.getElementById('btnEnviar'), erro=document.getElementById('msgErro');
+      erro.textContent=''; btn.disabled=true; btn.textContent='Enviando...';
+      try {
+        const r = await fetch('/api/auth/esqueci-senha',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({usuario:document.getElementById('usuario').value.trim(), email:document.getElementById('email').value.trim()})});
+        const d = await r.json();
+        if(d.ok){ document.getElementById('formArea').style.display='none'; document.getElementById('sucessoArea').style.display='block'; }
+        else{ erro.textContent='❌ '+d.erro; btn.disabled=false; btn.textContent='Enviar link de redefinição'; }
+      } catch { erro.textContent='❌ Erro de conexão.'; btn.disabled=false; btn.textContent='Enviar link de redefinição'; }
+    }
+  </script>
+</body>
+</html>
