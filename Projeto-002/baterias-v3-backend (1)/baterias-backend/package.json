@@ -8,8 +8,9 @@
     "dev": "nodemon src/server.js"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.4",
     "bcrypt": "^5.1.1",
-    "better-sqlite3": "^9.4.3",
+    "better-sqlite3": "^9.6.0",
     "connect-sqlite3": "^0.9.13",
     "crypto": "*",
     "dotenv": "^16.4.5",
